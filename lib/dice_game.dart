@@ -64,7 +64,7 @@ class DiceGame {
     this.dieB = 0,
     this.currentPot = 0,
     this.currentRound = 0,
-    this.totalRounds = 3,
+    this.totalRounds = 5,
     this.currentPlayer = '',
     this.roundStatus,
   });

@@ -117,7 +117,8 @@ class _GameWidgetState extends ConsumerState<GameWidget> {
         game.roundStatus == RoundStatus.allBanked || game.roundStatus == RoundStatus.busted;
     final isCurrentPlayer = currentPlayer.name == widget.name && !roundOver;
     final highScore = game.players.map((p) => p.score).reduce(max);
-    final gameOver = game.currentRound >= game.totalRounds;
+    final gameOver = game.currentRound >= game.totalRounds ||
+        (game.currentRound == game.totalRounds - 1 && roundOver);
 
     if (gameOver) {
       final didWin = myPlayerData.score == highScore;

@@ -21759,7 +21759,7 @@ Qx(){var s=0,r=A.K(t.H),q
 var $async$Qx=A.G(function(a,b){if(a===1)return A.H(b,r)
 while(true)switch(s){case 0:q=A.b([],t.Wj)
 s=2
-return A.P(A.mi($.oD().c.kO("game")).c.ji(new A.ei("",q,B.f1,0,0,0,0,0,3,null,"").eM()),$async$Qx)
+return A.P(A.mi($.oD().c.kO("game")).c.ji(new A.ei("",q,B.f1,0,0,0,0,0,5,null,"").eM()),$async$Qx)
 case 2:return A.I(null,r)}})
 return A.J($async$Qx,r)},
 aDJ(){var s,r=A.mi($.oD().c.kO("game"))
@@ -21770,7 +21770,7 @@ afZ(a,b){var s=0,r=A.K(t.H),q
 var $async$afZ=A.G(function(c,d){if(c===1)return A.H(d,r)
 while(true)switch(s){case 0:q=A.b([new A.ck(a,0,!1)],t.Wj)
 s=2
-return A.P(A.mi($.oD().c.kO("game")).c.ji(new A.ei(b,q,B.f1,0,0,0,0,0,3,null,"").eM()),$async$afZ)
+return A.P(A.mi($.oD().c.kO("game")).c.ji(new A.ei(b,q,B.f1,0,0,0,0,0,5,null,"").eM()),$async$afZ)
 case 2:return A.I(null,r)}})
 return A.J($async$afZ,r)},
 Qt(a){var s=0,r=A.K(t.H),q,p,o,n,m
@@ -70691,38 +70691,42 @@ s=2
 return A.P(A.t_(a.a91(B.b.gN(q).a,0,0,a.w+1,0,0,!0,A.Y(new A.V(q,new A.aa0(),p),!0,p.i("ai.E")),null)),$async$u1)
 case 2:return A.I(null,r)}})
 return A.J($async$u1,r)},
-L(a){var s,r,q,p,o,n,m,l,k,j,i,h,g,f,e=this,d=null,c=e.gPO().QB($.ak1(),t.BS).gm()
-c.toString
-s=c.b
+L(a1){var s,r,q,p,o,n,m,l,k,j,i,h,g,f,e,d,c,b=this,a=null,a0=b.gPO().QB($.ak1(),t.BS).gm()
+a0.toString
+s=a0.b
 r=A.T(s)
 q=r.i("ax<1>")
-p=A.ahJ(new A.ax(s,new A.aa5(c),q))
+p=A.ahJ(new A.ax(s,new A.aa5(a0),q))
 if(p==null)p=B.b.gN(s)
-o=new A.ax(s,new A.aa6(e),q).gN(0)
+o=new A.ax(s,new A.aa6(b),q).gN(0)
 n=o.c
-m=n?o.b:c.r
-l=c.y
+m=n?o.b:a0.r
+l=a0.y
 k=l===B.fy||l===B.iM
 j=p.a
-i=j===e.a.d&&!k
+i=j===b.a.d&&!k
 h=new A.V(s,new A.aa7(),r.i("V<1,p>")).xd(0,B.em)
-if(c.w>=c.x){c=o.b
-g=c===h
-f=new A.cE(new A.ax(s,new A.aa8(h),q),new A.aa9(),r.i("cE<1,m>")).bp(0,"\n")
+g=a0.w
+f=a0.x
+if(g<f)e=g===f-1&&k
+else e=!0
+if(e){a0=o.b
+d=a0===h
+c=new A.cE(new A.ax(s,new A.aa8(h),q),new A.aa9(),r.i("cE<1,m>")).bp(0,"\n")
 r=A.ahA(B.fi,"game over")
-s=A.ahA(g?B.is:B.fi,f)
-return A.kf(d,A.p6(A.b([B.bD,r,s,A.dQ("score "+c,d,d,d,A.fS(d,d,g?B.is:B.fi,d,d,d,d,d,d,d,d,24,d,d,d,d,d,!0,d,d,d,d,d,d,d,d),d,d),A.dQ("high score "+A.j(h),d,d,d,B.d_,d,d),new A.eS("Exit",e.a.f,d),B.bD],t.p),B.aU,B.dS,B.cG),B.G,d,d,d,d,1/0)}s=t.p
-j=A.b([B.bD,A.dQ("player\n"+j,d,d,d,B.d_,B.bG,d)],s)
-if(i)j.push(new A.eS("Roll Dice",new A.aaa(e,c),d))
-j.push(new A.u9(c.d,d))
-j.push(new A.u9(c.e,d))
-if(l!=null)j.push(new A.HI(l,d))
-if(n||k)j.push(A.dQ("score "+m,d,d,d,B.d_,d,d))
-else B.b.K(j,A.b([A.dQ("current "+c.r,d,d,d,B.d_,d,d),new A.eS("Bank",new A.aab(e,c,i),d)],s))
-if(k)j.push(A.dQ("high score "+A.j(h),d,d,d,B.d_,d,d))
-if(k&&e.a.e)j.push(new A.eS("continue",new A.aac(e,c),d))
+s=A.ahA(d?B.is:B.fi,c)
+return A.kf(a,A.p6(A.b([B.bD,r,s,A.dQ("score "+a0,a,a,a,A.fS(a,a,d?B.is:B.fi,a,a,a,a,a,a,a,a,24,a,a,a,a,a,!0,a,a,a,a,a,a,a,a),a,a),A.dQ("high score "+A.j(h),a,a,a,B.d_,a,a),new A.eS("Exit",b.a.f,a),B.bD],t.p),B.aU,B.dS,B.cG),B.G,a,a,a,a,1/0)}s=t.p
+j=A.b([B.bD,A.dQ("player\n"+j,a,a,a,B.d_,B.bG,a)],s)
+if(i)j.push(new A.eS("Roll Dice",new A.aaa(b,a0),a))
+j.push(new A.u9(a0.d,a))
+j.push(new A.u9(a0.e,a))
+if(l!=null)j.push(new A.HI(l,a))
+if(n||k)j.push(A.dQ("score "+m,a,a,a,B.d_,a,a))
+else B.b.K(j,A.b([A.dQ("current "+a0.r,a,a,a,B.d_,a,a),new A.eS("Bank",new A.aab(b,a0,i),a)],s))
+if(k)j.push(A.dQ("high score "+A.j(h),a,a,a,B.d_,a,a))
+if(k&&b.a.e)j.push(new A.eS("continue",new A.aac(b,a0),a))
 j.push(B.bD)
-return A.kf(d,A.p6(j,B.aU,B.dS,B.cG),B.G,d,d,d,d,1/0)}}
+return A.kf(a,A.p6(j,B.aU,B.dS,B.cG),B.G,a,a,a,a,1/0)}}
 A.aa2.prototype={
 $1(a){return a.a===this.a.a.d},
 $S:35}
