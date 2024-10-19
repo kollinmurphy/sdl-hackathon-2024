@@ -7,6 +7,10 @@ DatabaseReference dbRef = FirebaseDatabase.instance.ref();
 Future<void> initRootGame() async {
   final rootGame = await dbRef.child('game').get();
   if (rootGame.exists) return;
+  await overwriteRootGame();
+}
+
+Future<void> overwriteRootGame() async {
   final newGame = DiceGame(players: [], status: GameStatus.waiting);
   await dbRef.child('game').set(newGame.toJson());
 }

@@ -6,14 +6,21 @@ import 'package:sdl_hackathon/arcade_button.dart';
 import 'package:sdl_hackathon/dice_game.dart';
 import 'package:sdl_hackathon/die_display.dart';
 import 'package:sdl_hackathon/firebase.dart';
+import 'package:sdl_hackathon/glow_text.dart';
 import 'package:sdl_hackathon/state.dart';
 import 'package:sdl_hackathon/status_text.dart';
 
 class GameWidget extends ConsumerStatefulWidget {
-  const GameWidget({super.key, required this.name, required this.isHost});
+  const GameWidget({
+    super.key,
+    required this.name,
+    required this.isHost,
+    required this.onExit,
+  });
 
   final String name;
   final bool isHost;
+  final VoidCallback onExit;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _GameWidgetState();
@@ -73,7 +80,7 @@ class _GameWidgetState extends ConsumerState<GameWidget> {
     var newGame = (isMyTurn ? _nextTurn(game) : game).copyWith(
       players: game.players.map((p) {
         if (p.name == widget.name) {
-          return p.copyWith(hasBanked: true, score: game.currentPot);
+          return p.copyWith(hasBanked: true, score: game.currentPot + p.score);
         }
         return p;
       }).toList(),
@@ -112,7 +119,9 @@ class _GameWidgetState extends ConsumerState<GameWidget> {
     final highScore = game.players.map((p) => p.score).reduce(max);
     final gameOver = game.currentRound >= game.totalRounds;
 
-    if (gameOver)
+    if (gameOver) {
+      final didWin = myPlayerData.score == highScore;
+      final winners = game.players.where((p) => p.score == highScore).map((p) => p.name).join('\n');
       return Container(
         width: double.infinity,
         child: Column(
@@ -120,21 +129,31 @@ class _GameWidgetState extends ConsumerState<GameWidget> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             const SizedBox(height: 16),
-            Text(
-              'game over',
-              style: const TextStyle(fontSize: 24),
-              textAlign: TextAlign.center,
+            GlowText(
+              text: 'game over',
+              color: Colors.red,
             ),
-            Text('score $highScore', style: const TextStyle(fontSize: 24)),
+            GlowText(
+              text: winners,
+              color: didWin ? Colors.green : Colors.red,
+            ),
+            Text(
+              'score ${myPlayerData.score}',
+              style: TextStyle(
+                fontSize: 24,
+                color: didWin ? Colors.green : Colors.red,
+              ),
+            ),
             Text('high score $highScore', style: const TextStyle(fontSize: 24)),
             ArcadeButton(
-              onPressed: () => Navigator.of(context).pop(),
+              onPressed: widget.onExit,
               text: 'Exit',
             ),
             const SizedBox(height: 16),
           ],
         ),
       );
+    }
 
     return Container(
       width: double.infinity,

@@ -96,6 +96,18 @@ class _HomePageState extends ConsumerState<HomePage> {
     });
   }
 
+  void _onExit() {
+    if (_isHost) {
+      overwriteRootGame();
+    }
+    setState(() {
+      _name = null;
+      _gameId = null;
+      _hasJoined = false;
+      _isHost = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final game = ref.watch(gameProvider).value;
@@ -128,7 +140,7 @@ class _HomePageState extends ConsumerState<HomePage> {
     }
 
     if (game?.status == GameStatus.playing && _hasJoined) {
-      return GameWidget(name: _name!, isHost: _isHost);
+      return GameWidget(name: _name!, isHost: _isHost, onExit: _onExit);
     }
     if (game != null && game.status != GameStatus.waiting) {
       return Center(

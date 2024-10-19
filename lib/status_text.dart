@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sdl_hackathon/dice_game.dart';
+import 'package:sdl_hackathon/glow_text.dart';
 
 String _statusToLabel(RoundStatus status) {
   switch (status) {
@@ -33,19 +34,6 @@ class StatusText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      _statusToLabel(status),
-      style: TextStyle(
-        color: _statusToColor(status),
-        fontSize: 32,
-        shadows: [
-          Shadow(
-            blurRadius: 16,
-            color: _statusToColor(status).withAlpha(255),
-            offset: Offset(0, 0),
-          ),
-        ],
-      ),
-    );
+    return GlowText(text: _statusToLabel(status), color: _statusToColor(status));
   }
 }
