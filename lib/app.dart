@@ -23,9 +23,19 @@ class _MyAppState extends State<MyApp> {
       child: MaterialApp(
         title: 'SDL Hackathon',
         theme: ThemeData(
-          primarySwatch: Colors.blue,
+          fontFamily: 'Arcade',
+          // dark mode with a black background and white text
+          brightness: Brightness.dark,
+          textTheme: const TextTheme(
+            bodyLarge: TextStyle(color: Colors.white),
+            bodyMedium: TextStyle(color: Colors.white),
+            bodySmall: TextStyle(color: Colors.white),
+          ),
         ),
-        home: Scaffold(body: const HomePage()),
+        home: Scaffold(
+          backgroundColor: Colors.black,
+          body: SafeArea(child: const HomePage()),
+        ),
       ),
     );
   }

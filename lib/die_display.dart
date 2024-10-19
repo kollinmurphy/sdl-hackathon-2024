@@ -7,7 +7,10 @@ class DieDisplay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // display asset image based on value
-    return Image.asset('DicePack/$value.png');
+    if (value == 0) return const SizedBox.shrink();
+    return Image(
+      alignment: Alignment.center,
+      image: AssetImage('assets/DicePack/die$value.png'),
+    );
   }
 }

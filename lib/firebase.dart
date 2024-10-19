@@ -17,10 +17,13 @@ Stream<DiceGame> getGameStream() {
   });
 }
 
-Future<void> hostGame(String name) async {
-  final game = DiceGame(players: [
-    new PlayerData(name: name, score: 0, hasBanked: false),
-  ], status: GameStatus.waiting);
+Future<void> hostGame(String name, String gameId) async {
+  final game = DiceGame(
+      gameId: gameId,
+      players: [
+        new PlayerData(name: name, score: 0, hasBanked: false),
+      ],
+      status: GameStatus.waiting);
   await dbRef.child('game').set(game.toJson());
 }
 

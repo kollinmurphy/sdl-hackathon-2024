@@ -11,5 +11,12 @@
       "program": "lib/main.dart",
       "deviceId": "00008120-000E4C5E0E50A01E",
     },
+    {
+      "name": "launch (Chrome)",
+      "type": "dart",
+      "request": "launch",
+      "program": "lib/main.dart",
+      "deviceId": "chrome",
+    },
   ]
 }

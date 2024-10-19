@@ -43,6 +43,7 @@ class PlayerData {
 }
 
 class DiceGame {
+  final String gameId;
   final List<PlayerData> players;
   final GameStatus status;
   final int dieA;
@@ -52,22 +53,28 @@ class DiceGame {
   final int currentRound;
   final int totalRounds;
   final RoundStatus? roundStatus;
+  final String currentPlayer;
 
   DiceGame({
     required this.players,
     required this.status,
+    this.gameId = '',
     this.currentRoll = 0,
     this.dieA = 0,
     this.dieB = 0,
     this.currentPot = 0,
     this.currentRound = 0,
     this.totalRounds = 10,
+    this.currentPlayer = '',
     this.roundStatus,
   });
 
   factory DiceGame.fromJson(Map<dynamic, dynamic> json) {
     return DiceGame(
-      players: (json['players'] as List).map((e) => PlayerData.fromJson(e)).toList(),
+      gameId: json['gameId'] ?? '',
+      players: json['players'] == null
+          ? []
+          : (json['players'] as List).map((e) => PlayerData.fromJson(e)).toList(),
       status: GameStatus.values.firstWhere((e) => e.toString() == 'GameStatus.${json['status']}'),
       currentRoll: json['currentRoll'] ?? 0,
       dieA: json['diceA'] ?? 0,
@@ -79,11 +86,13 @@ class DiceGame {
           ? RoundStatus.values
               .firstWhere((e) => e.toString() == 'RoundStatus.${json['roundStatus']}')
           : null,
+      currentPlayer: json['currentPlayer'] ?? '',
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
+      'gameId': gameId,
       'players': players.map((e) => e.toJson()).toList(),
       'status': status.toString().split('.').last,
       'currentRoll': currentRoll,
@@ -93,10 +102,12 @@ class DiceGame {
       'currentRound': currentRound,
       'totalRounds': totalRounds,
       'roundStatus': roundStatus?.toString().split('.').last,
+      'currentPlayer': currentPlayer,
     };
   }
 
   DiceGame copyWith({
+    String? gameId,
     List<PlayerData>? players,
     GameStatus? status,
     int? currentRoll,
@@ -106,8 +117,10 @@ class DiceGame {
     int? currentRound,
     int? totalRounds,
     RoundStatus? roundStatus,
+    String? currentPlayer,
   }) {
     return DiceGame(
+      gameId: gameId ?? this.gameId,
       players: players ?? this.players,
       status: status ?? this.status,
       currentRoll: currentRoll ?? this.currentRoll,
@@ -117,6 +130,7 @@ class DiceGame {
       currentRound: currentRound ?? this.currentRound,
       totalRounds: totalRounds ?? this.totalRounds,
       roundStatus: roundStatus ?? this.roundStatus,
+      currentPlayer: currentPlayer ?? this.currentPlayer,
     );
   }
 }
