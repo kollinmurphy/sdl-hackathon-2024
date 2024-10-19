@@ -156,6 +156,7 @@ class _HomePageState extends ConsumerState<HomePage> {
               )
           ]));
     }
+    final needsHost = game == null || game.players.length == 0;
     return Container(
       width: double.infinity,
       child: Column(
@@ -171,14 +172,14 @@ class _HomePageState extends ConsumerState<HomePage> {
               textAlign: TextAlign.center,
               style: const TextStyle(fontSize: 36),
             ),
-          if ((!_hasJoined && game == null) || _name == "KOLLIN")
+          if ((!_hasJoined && needsHost) || _name == "KOLLIN")
             ArcadeButton(
               onPressed: _hostGame,
               text: 'Host Game',
             ),
-          if (!_isHost && !_hasJoined)
+          if (!_isHost && !_hasJoined && !needsHost)
             ArcadeButton(
-              onPressed: () => _joinGame(game!),
+              onPressed: () => _joinGame(game),
               text: 'insert token',
             ),
           if (_isHost)

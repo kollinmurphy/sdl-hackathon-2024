@@ -70823,23 +70823,24 @@ if(a!=null&&B.b.p(a.b,s))return
 this.ag(new A.aar(this,s))},
 a30(){if(this.Q)A.Qx()
 this.ag(new A.aaq(this))},
-L(a){var s,r=this,q=null,p=r.gPO().QB($.ak1(),t.BS).gm(),o=p==null,n=!o
-if(n&&p.a!==r.x)A.pv(B.p,new A.aat(r),t.P)
-s=r.y
-if(s==null){o=r.w
-o===$&&A.a()
-return new A.e2(B.kU,A.p6(A.b([B.bD,new A.Cw(o,"player name",q),new A.eS("continue",new A.aau(r,p),q),B.bD],t.p),B.aU,B.dS,B.cG),q)}if((o?q:p.c)===B.i_&&r.z)return new A.uO(s,r.Q,r.ga3_(),q)
-if(n&&p.c!==B.f1){o=A.b([A.dQ("in progress",q,q,q,B.d_,B.bG,q)],t.p)
-if(r.y==="KOLLIN")o.push(new A.e2(B.AY,new A.eS("Host new game",r.gIJ(),q),q))
-return A.tA(A.p6(o,B.aU,B.qr,B.cG),q,q)}n=A.b([B.bD],t.p)
-s=r.z
-if(!s||!r.Q){if(s)s="ready"
-else{s=o?q:p.b.length
-s="ready\nplayer\n"+A.aEd((s==null?0:s)+1)}n.push(A.dQ(s,q,q,q,B.LU,B.bG,q))}if(!r.z&&o||r.y==="KOLLIN")n.push(new A.eS("Host Game",r.gIJ(),q))
-if(!r.Q&&!r.z)n.push(new A.eS("insert token",new A.aav(r,p),q))
-if(r.Q)n.push(new A.eS("play",new A.aaw(p),q))
-n.push(B.bD)
-return A.kf(q,A.p6(n,B.aU,B.dS,B.cG),B.G,q,q,q,q,1/0)}}
+L(a){var s,r,q=this,p=null,o=q.gPO().QB($.ak1(),t.BS).gm(),n=o==null,m=!n
+if(m&&o.a!==q.x)A.pv(B.p,new A.aat(q),t.P)
+s=q.y
+if(s==null){n=q.w
+n===$&&A.a()
+return new A.e2(B.kU,A.p6(A.b([B.bD,new A.Cw(n,"player name",p),new A.eS("continue",new A.aau(q,o),p),B.bD],t.p),B.aU,B.dS,B.cG),p)}if((n?p:o.c)===B.i_&&q.z)return new A.uO(s,q.Q,q.ga3_(),p)
+if(m&&o.c!==B.f1){n=A.b([A.dQ("in progress",p,p,p,B.d_,B.bG,p)],t.p)
+if(q.y==="KOLLIN")n.push(new A.e2(B.AY,new A.eS("Host new game",q.gIJ(),p),p))
+return A.tA(A.p6(n,B.aU,B.qr,B.cG),p,p)}r=!m||o.b.length===0
+m=A.b([B.bD],t.p)
+s=q.z
+if(!s||!q.Q){if(s)n="ready"
+else{n=n?p:o.b.length
+n="ready\nplayer\n"+A.aEd((n==null?0:n)+1)}m.push(A.dQ(n,p,p,p,B.LU,B.bG,p))}if(!q.z&&r||q.y==="KOLLIN")m.push(new A.eS("Host Game",q.gIJ(),p))
+if(!q.Q&&!q.z&&!r)m.push(new A.eS("insert token",new A.aav(q,o),p))
+if(q.Q)m.push(new A.eS("play",new A.aaw(o),p))
+m.push(B.bD)
+return A.kf(p,A.p6(m,B.aU,B.dS,B.cG),B.G,p,p,p,p,1/0)}}
 A.aao.prototype={
 $0(){var s=this.a
 s.x=this.b
@@ -70870,9 +70871,7 @@ A.aau.prototype={
 $0(){return this.a.a5y(this.b)},
 $S:0}
 A.aav.prototype={
-$0(){var s=this.b
-s.toString
-return this.a.tN(s)},
+$0(){return this.a.tN(this.b)},
 $S:0}
 A.aaw.prototype={
 $0(){var s=0,r=A.K(t.H),q=this
