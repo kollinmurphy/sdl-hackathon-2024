@@ -7,6 +7,7 @@ import 'package:sdl_hackathon/dice_game.dart';
 import 'package:sdl_hackathon/die_display.dart';
 import 'package:sdl_hackathon/firebase.dart';
 import 'package:sdl_hackathon/state.dart';
+import 'package:sdl_hackathon/status_text.dart';
 
 class GameWidget extends ConsumerStatefulWidget {
   const GameWidget({super.key, required this.name, required this.isHost});
@@ -19,40 +20,81 @@ class GameWidget extends ConsumerStatefulWidget {
 }
 
 class _GameWidgetState extends ConsumerState<GameWidget> {
+  DiceGame _nextTurn(DiceGame game) {
+    int myIndex = game.players.indexWhere((p) => p.name == widget.name);
+    String? nextUnbankedPlayer;
+    bool roundOver = false;
+    try {
+      nextUnbankedPlayer = game.players
+          .skip(myIndex + 1)
+          .firstWhere((p) => !p.hasBanked,
+              orElse: () => game.players.firstWhere((p) => !p.hasBanked))
+          .name;
+    } catch (e) {
+      roundOver = true;
+    }
+    return game.copyWith(
+      currentPlayer: nextUnbankedPlayer,
+      roundStatus: roundOver ? RoundStatus.allBanked : null,
+      overrideRoundStatus: true,
+    );
+  }
+
   void _roll(DiceGame game) async {
     final a = Random().nextInt(6) + 1;
     final b = Random().nextInt(6) + 1;
     final sum = a + b;
     final shouldDouble = a == b && game.currentRoll > 3;
     final losePot = sum == 7 && game.currentRoll > 3;
-    int myIndex = game.players.indexWhere((p) => p.name == widget.name);
-    String nextUnbankedPlayer = game.players
-        .skip(myIndex + 1)
-        .firstWhere((p) => !p.hasBanked, orElse: () => game.players.firstWhere((p) => !p.hasBanked))
-        .name;
-    final newGame = game.copyWith(
-      diceA: a,
-      diceB: b,
+    final shouldAddSeventy = sum == 7 && game.currentRoll <= 3;
+    final nextTurn = _nextTurn(game);
+    final newGame = nextTurn.copyWith(
+      dieA: a,
+      dieB: b,
       currentRoll: game.currentRoll + 1,
-      currentPot: losePot ? 0 : (shouldDouble ? game.currentPot * 2 : game.currentPot + sum),
-      currentPlayer: nextUnbankedPlayer,
-      roundStatus: losePot
-          ? RoundStatus.busted
-          : shouldDouble
-              ? RoundStatus.doubled
-              : null,
+      currentPot: shouldAddSeventy
+          ? game.currentPot + 70
+          : losePot
+              ? 0
+              : (shouldDouble ? game.currentPot * 2 : game.currentPot + sum),
+      roundStatus: shouldAddSeventy
+          ? RoundStatus.plusSeventy
+          : losePot
+              ? RoundStatus.busted
+              : shouldDouble
+                  ? RoundStatus.doubled
+                  : nextTurn.roundStatus,
+      overrideRoundStatus: true,
     );
     await updateGame(newGame);
   }
 
-  void _bank(DiceGame game) async {
-    final newGame = game.copyWith(
+  void _bank(DiceGame game, bool isMyTurn) async {
+    var newGame = (isMyTurn ? _nextTurn(game) : game).copyWith(
       players: game.players.map((p) {
-        if (p == widget.name) {
-          return p.copyWith(hasBanked: true);
+        if (p.name == widget.name) {
+          return p.copyWith(hasBanked: true, score: game.currentPot);
         }
         return p;
       }).toList(),
+    );
+    if (newGame.players.every((p) => p.hasBanked)) {
+      newGame = newGame.copyWith(roundStatus: RoundStatus.allBanked);
+    }
+    await updateGame(newGame);
+  }
+
+  void _nextRound(DiceGame game) async {
+    final newGame = game.copyWith(
+      currentPot: 0,
+      currentRoll: 0,
+      dieA: 0,
+      dieB: 0,
+      currentPlayer: game.players.first.name,
+      currentRound: game.currentRound + 1,
+      roundStatus: null,
+      players: game.players.map((p) => p.copyWith(hasBanked: false)).toList(),
+      overrideRoundStatus: true,
     );
     await updateGame(newGame);
   }
@@ -60,11 +102,40 @@ class _GameWidgetState extends ConsumerState<GameWidget> {
   @override
   Widget build(BuildContext context) {
     final game = ref.watch(gameProvider).value!;
-    final currentTurn = game.currentRoll % game.players.length;
-    final currentPlayer = game.players[currentTurn];
-    final isCurrentPlayer = currentPlayer.name == widget.name;
+    final currentPlayer =
+        game.players.where((p) => p.name == game.currentPlayer).firstOrNull ?? game.players.first;
     final myPlayerData = game.players.where((p) => p.name == widget.name).first;
-    final points = currentPlayer.hasBanked ? currentPlayer.score : game.currentPot;
+    final points = myPlayerData.hasBanked ? myPlayerData.score : game.currentPot;
+    final roundOver =
+        game.roundStatus == RoundStatus.allBanked || game.roundStatus == RoundStatus.busted;
+    final isCurrentPlayer = currentPlayer.name == widget.name && !roundOver;
+    final highScore = game.players.map((p) => p.score).reduce(max);
+    final gameOver = game.currentRound >= game.totalRounds;
+
+    if (gameOver)
+      return Container(
+        width: double.infinity,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const SizedBox(height: 16),
+            Text(
+              'game over',
+              style: const TextStyle(fontSize: 24),
+              textAlign: TextAlign.center,
+            ),
+            Text('score $highScore', style: const TextStyle(fontSize: 24)),
+            Text('high score $highScore', style: const TextStyle(fontSize: 24)),
+            ArcadeButton(
+              onPressed: () => Navigator.of(context).pop(),
+              text: 'Exit',
+            ),
+            const SizedBox(height: 16),
+          ],
+        ),
+      );
+
     return Container(
       width: double.infinity,
       child: Column(
@@ -72,16 +143,29 @@ class _GameWidgetState extends ConsumerState<GameWidget> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           const SizedBox(height: 16),
-          Text('player ${currentPlayer.name}', style: const TextStyle(fontSize: 24)),
+          Text(
+            'player\n${currentPlayer.name}',
+            style: const TextStyle(fontSize: 24),
+            textAlign: TextAlign.center,
+          ),
           if (isCurrentPlayer) ArcadeButton(onPressed: () => _roll(game), text: 'Roll Dice'),
           DieDisplay(value: game.dieA),
           DieDisplay(value: game.dieB),
-          Text('high score ${game.currentPot}', style: const TextStyle(fontSize: 24)),
-          Text('score $points', style: const TextStyle(fontSize: 24)),
-          if (!myPlayerData.hasBanked)
+          if (game.roundStatus != null) StatusText(status: game.roundStatus!),
+          if (myPlayerData.hasBanked || roundOver)
+            Text('score $points', style: const TextStyle(fontSize: 24))
+          else ...[
+            Text('current ${game.currentPot}', style: const TextStyle(fontSize: 24)),
             ArcadeButton(
-              onPressed: () => _bank(game),
+              onPressed: () => _bank(game, isCurrentPlayer),
               text: 'Bank',
+            ),
+          ],
+          if (roundOver) Text('high score $highScore', style: const TextStyle(fontSize: 24)),
+          if (roundOver && widget.isHost)
+            ArcadeButton(
+              onPressed: () => _nextRound(game),
+              text: 'continue',
             ),
           const SizedBox(height: 16),
         ],

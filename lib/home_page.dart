@@ -15,6 +15,8 @@ String _createGuid() {
 
 String numberToWord(int number) {
   switch (number) {
+    case 0:
+      return 'zero';
     case 1:
       return 'one';
     case 2:
@@ -134,7 +136,7 @@ class _HomePageState extends ConsumerState<HomePage> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-            Text('Game is in progress', style: const TextStyle(fontSize: 24)),
+            Text('in progress', style: const TextStyle(fontSize: 24), textAlign: TextAlign.center),
             if (_name == "KOLLIN")
               Padding(
                 padding: const EdgeInsets.only(top: 16.0),
@@ -151,7 +153,9 @@ class _HomePageState extends ConsumerState<HomePage> {
           const SizedBox(height: 16),
           if (!_hasJoined || !_isHost)
             Text(
-              _hasJoined ? "ready" : 'ready\nplayer\n${numberToWord(game?.players.length ?? 1)}',
+              _hasJoined
+                  ? "ready"
+                  : 'ready\nplayer\n${numberToWord((game?.players.length ?? 0) + 1)}',
               textAlign: TextAlign.center,
               style: const TextStyle(fontSize: 36),
             ),

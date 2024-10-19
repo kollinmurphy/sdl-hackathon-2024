@@ -1,6 +1,6 @@
 enum GameStatus { waiting, playing, finished }
 
-enum RoundStatus { busted, doubled }
+enum RoundStatus { busted, doubled, allBanked, plusSeventy }
 
 class PlayerData {
   final String name;
@@ -64,7 +64,7 @@ class DiceGame {
     this.dieB = 0,
     this.currentPot = 0,
     this.currentRound = 0,
-    this.totalRounds = 10,
+    this.totalRounds = 3,
     this.currentPlayer = '',
     this.roundStatus,
   });
@@ -111,25 +111,26 @@ class DiceGame {
     List<PlayerData>? players,
     GameStatus? status,
     int? currentRoll,
-    int? diceA,
-    int? diceB,
+    int? dieA,
+    int? dieB,
     int? currentPot,
     int? currentRound,
     int? totalRounds,
     RoundStatus? roundStatus,
     String? currentPlayer,
+    bool overrideRoundStatus = false,
   }) {
     return DiceGame(
       gameId: gameId ?? this.gameId,
       players: players ?? this.players,
       status: status ?? this.status,
       currentRoll: currentRoll ?? this.currentRoll,
-      dieA: diceA ?? this.dieA,
-      dieB: diceB ?? this.dieB,
+      dieA: dieA ?? this.dieA,
+      dieB: dieB ?? this.dieB,
       currentPot: currentPot ?? this.currentPot,
       currentRound: currentRound ?? this.currentRound,
       totalRounds: totalRounds ?? this.totalRounds,
-      roundStatus: roundStatus ?? this.roundStatus,
+      roundStatus: roundStatus ?? (overrideRoundStatus ? roundStatus : this.roundStatus),
       currentPlayer: currentPlayer ?? this.currentPlayer,
     );
   }
