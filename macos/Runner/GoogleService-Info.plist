@@ -26,5 +26,7 @@
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
 	<string>1:1044984608295:ios:69992b964637c0fa430002</string>
+	<key>DATABASE_URL</key>
+	<string>https://sdl-hackathon-869ac-default-rtdb.firebaseio.com</string>
 </dict>
 </plist>

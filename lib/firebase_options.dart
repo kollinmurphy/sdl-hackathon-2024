@@ -46,6 +46,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '1044984608295',
     projectId: 'sdl-hackathon-869ac',
     authDomain: 'sdl-hackathon-869ac.firebaseapp.com',
+    databaseURL: 'https://sdl-hackathon-869ac-default-rtdb.firebaseio.com',
     storageBucket: 'sdl-hackathon-869ac.appspot.com',
   );
 
@@ -54,6 +55,7 @@ class DefaultFirebaseOptions {
     appId: '1:1044984608295:android:87dc62b7594a78db430002',
     messagingSenderId: '1044984608295',
     projectId: 'sdl-hackathon-869ac',
+    databaseURL: 'https://sdl-hackathon-869ac-default-rtdb.firebaseio.com',
     storageBucket: 'sdl-hackathon-869ac.appspot.com',
   );
 
@@ -62,6 +64,7 @@ class DefaultFirebaseOptions {
     appId: '1:1044984608295:ios:69992b964637c0fa430002',
     messagingSenderId: '1044984608295',
     projectId: 'sdl-hackathon-869ac',
+    databaseURL: 'https://sdl-hackathon-869ac-default-rtdb.firebaseio.com',
     storageBucket: 'sdl-hackathon-869ac.appspot.com',
     iosBundleId: 'com.example.sdlHackathon',
   );
@@ -71,6 +74,7 @@ class DefaultFirebaseOptions {
     appId: '1:1044984608295:ios:69992b964637c0fa430002',
     messagingSenderId: '1044984608295',
     projectId: 'sdl-hackathon-869ac',
+    databaseURL: 'https://sdl-hackathon-869ac-default-rtdb.firebaseio.com',
     storageBucket: 'sdl-hackathon-869ac.appspot.com',
     iosBundleId: 'com.example.sdlHackathon',
   );
@@ -81,6 +85,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '1044984608295',
     projectId: 'sdl-hackathon-869ac',
     authDomain: 'sdl-hackathon-869ac.firebaseapp.com',
+    databaseURL: 'https://sdl-hackathon-869ac-default-rtdb.firebaseio.com',
     storageBucket: 'sdl-hackathon-869ac.appspot.com',
   );
+
 }
