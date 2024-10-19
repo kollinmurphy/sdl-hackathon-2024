@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1044984608295",
+    "project_id": "sdl-hackathon-869ac",
+    "storage_bucket": "sdl-hackathon-869ac.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1044984608295:android:87dc62b7594a78db430002",
+        "android_client_info": {
+          "package_name": "com.kollinmurphy.sdlhackathon"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDTUb1qtr2cYauQSrG_E1CSeOtyikjzOD8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

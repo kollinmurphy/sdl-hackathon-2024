@@ -1,4 +1,4 @@
-package com.example.sdl_hackathon
+package com.kollinmurphy.sdl_hackathon
 
 import io.flutter.embedding.android.FlutterActivity
 
